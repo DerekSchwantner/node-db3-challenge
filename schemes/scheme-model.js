@@ -45,10 +45,19 @@ function update(changes, id) {
     .update(changes);
 }
 
-function remove(id) {
+async function remove(id) {
+  const doesIdExist = await findById(id);
   return db("schemes")
     .where({ id })
-    .del();
+    .del()
+    .then(deleted => {
+      if (doesIdExist) {
+        return deleted;
+      } else {
+        console.log("the id is NULL");
+        return null;
+      }
+    });
 }
 
 // async function update(scheme, id) {
