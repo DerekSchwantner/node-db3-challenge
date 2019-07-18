@@ -33,8 +33,34 @@ function findSteps(id) {
     .orderBy("steps.step_number", "asc");
 }
 
-function add(scheme) {}
+function add(scheme) {
+  return db("schemes")
+    .insert(scheme)
+    .then(([id]) => findById(id));
+}
 
-function update() {}
+function update(changes, id) {
+  return db("schemes")
+    .where({ id })
+    .update(changes);
+}
 
-function remove() {}
+function remove(id) {
+  return db("schemes")
+    .where({ id })
+    .del();
+}
+
+// async function update(scheme, id) {
+//     try {
+//       const checkId = await db("schemes")
+//         .where({ id })
+//         .first();
+//       console.log("checkid:", checkId);
+//       if (!checkId) {
+//         return null;
+//       } else {
+//         return db("schemes").update(scheme);
+//       }
+//     } catch (error) {}
+//   }
